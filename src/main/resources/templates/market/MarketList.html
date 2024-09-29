@@ -1,0 +1,103 @@
+<th:block th:include ="/grid/_header.html"/>
+<title>상품목록</title>
+<link rel="stylesheet" th:href="@{/css/style_market_list.css}">
+<!-- #main -->
+<main id="main" class="cf">
+    <section class="mainIn cf">
+        <div class="sub_bg">
+            <img th:src="@{/images/sub_top_tit2.png}" alt="MARKET" class="sub_tit">
+        </div><!-- .sub_bg -->
+        <aside class="aside">
+            <div class="sidebar">
+                <div class="aside_cate">
+                    <img th:src="@{/images/sub_aside_cate2_tit.png}" alt="Buying in the Market 장보기">
+                </div><!-- .aside_cate -->
+                <div class="aside_bg">
+                    <ul class="cate_lnb_real">
+                        <li> <a href="#">장보기</a></li>
+                    </ul><!-- .cate_lnb -->
+                </div><!-- .aside_bg -->
+            </div><!-- .sidebar -->
+        </aside><!-- .aside -->
+        <article class="article">
+            <div class="articleIn">
+                <nav>
+                    <h2>
+                        <img th:src="@{/images/sub_nav_tit_cate2_tit1.png}" alt="장보기">
+                    </h2>
+                    <p class="location">
+                        <img th:src="@{/images/sub_page_nav_ico.gif}" alt="메뉴">
+                        <span>HOME </span>
+                        <span>장보기 </span>
+                        <strong>장보기</strong>
+                    </p>
+                </nav>
+                <ul class="tabs">
+                    <li><a th:href="@{/market/list}" class="tabs_item">전체(3)</a></li>
+                    <li><a th:href="@{/market/list.do}" class="tabs_item item">과일</a></li>
+                    <li><a th:href="@{/market/list.do}" class="tabs_item item">야채</a></li>
+                    <li><a th:href="@{/market/list.do}" class="tabs_item item">곡류</a></li>
+                    <!--                            <li><a th:href="@{/market/list.do?cateName=과일}" class="tabs_item item">과일</a></li>-->
+                    <!--                            <li><a th:href="/FarmStory/market/list.do?cateName=야채" class="tabs_item item">야채</a></li>-->
+                    <!--                            <li><a th:href="/FarmStory/market/list.do?cateName=곡류" class="tabs_item item">곡류</a></li>-->
+                </ul>
+                <table class="product_table">
+                    <colgroup>
+                        <col width="13.14%">    <!-- 이미지 -->
+                        <col width="10.01%">    <!-- 종류 -->
+                        <col width="40.93%">    <!-- 상품명 -->
+                        <col width="12.02%">    <!-- 할인 -->
+                        <col width="12.02%">    <!-- 포인트 -->
+                        <col width="12.02%">    <!-- 판매가격 -->
+                    </colgroup>
+                    <thead>
+                    <tr class="row">
+                        <th>이미지</th>
+                        <th>종류</th>
+                        <th>상품명</th>
+                        <th>할인</th>
+                        <th>포인트</th>
+                        <th>판매가격</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:if="${page.content == null || page.content.isEmpty()}">
+                        <td colspan="7" class="td_first" style="width: 100%">장바구니에 상품이 없습니다.</td>
+                    </tr>
+                    <tr th:each="product:${page.content}" th:if="${product != null}">
+                        <td class="pic"><img src="#" alt="사과 500g"></td>
+                        <td class="type">[[${product.prodCateType}]]</td>
+                        <td class="pro_name"><a th:href="@{/market/MarketView}">[[${product.prodName}]]</a></td>
+                        <td class="sale">[[${product.prodDiscount}]]%</td>
+                        <td class="point">[[${product.prodPoint}]]p</td>
+                        <td class="price">
+                            <strong>
+                                <!--									        <fmt:formatNumber value="${service.disPrice(productDto)}" pattern="#,###"/>원-->
+                            </strong>
+                            <span class="original_price">
+<!--									        <fmt:formatNumber value="${productDto.price}" pattern="#,###"/>원-->
+									    </span>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="pages">
+                    <ul>
+                        <li>
+                            <a th:href="@{/market/MarketList(page=${page.number - 1}, size=${page.size})}" th:if="${page.hasPrevious()}" class="no current">&#60;</a>
+                        </li>
+                        <li>
+                            <!--<c:forEach var="i" begin="${pageGroupP.start}" end="${pageGroupP.end}">-->
+<!--                             <span th:text="'Page ' + ${page.number} + ' of ' + ${page.totalPages}"></span>-->
+                            <a th:href="@{/market/list}" class="no">[[${page.number} + 1]]</a>
+                        </li>
+                        <li>
+                            <a th:href="@{/market/MarketList(page=${page.number + 1}, size=${page.size})}" th:if="${page.hasNext()}" class="no last_no">&#62;</a>
+                        </li>
+                    </ul>
+                </div>
+            </div><!-- .articleIn -->
+        </article><!-- .article -->
+    </section>
+</main><!-- #main -->
+<th:block th:include ="/grid/_footer.html"/>
